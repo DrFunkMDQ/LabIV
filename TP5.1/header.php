@@ -9,6 +9,6 @@
      <link rel="stylesheet" href="Style/css/bootstrap.min.css">
      <link rel="stylesheet" href="Style/css/estilos.css">
 
-     <title>Practico N° 5</title>
+     <title>Practico N° 5.1</title>
 </head>
 <body>

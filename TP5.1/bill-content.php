@@ -1,6 +1,17 @@
-<?php
+<?php 
 include('header.php');
 include('nav.php');
+
+include_once('Process/billContentProcess.php');
+
+use Config\Autoload as Autoload;
+
+use Model\Bill as Bill;
+use Model\Item as Item;
+use Repository\BillRepository as BillRepository;
+
+Autoload::Start();
+
 ?>
 <main class="py-5">
      <div class="container">
@@ -9,18 +20,18 @@ include('nav.php');
           <div class="bg-light-alpha p-1">
                <div class="row">
                     <div class="col-lg-3">
-                         <label for="">Fecha</label>
-                         <input type="date" class="form-control form-control-ml" disabled value="">
+                         <label >Fecha</label>
+                         <input type="date" class="form-control form-control-ml" disabled value="<?php echo $newBill->getBillDate(); ?>">
                     </div>
 
                     <div class="col-lg-3">
-                         <label for="">Tipo</label>
-                         <input type="text" class="form-control form-control-ml" disabled value="">
+                         <label >Tipo</label>
+                         <input type="text" class="form-control form-control-ml" disabled value="<?php echo "Factura ". $newBill->getBillType(); ?>">
                     </div>
 
                     <div class="col-lg-3">
-                         <label for="">Numero</label>
-                         <input type="number" class="form-control form-control-ml" disabled value="">
+                         <label >Numero</label>
+                         <input type="number" class="form-control form-control-ml" disabled value="<?php echo "000". $newBill->getBillNumber(); ?>">
                     </div>
                </div>
      </div><br>
@@ -28,34 +39,40 @@ include('nav.php');
      <div class="container">
           <h2 class="mb-4">Agregar Item a Factura</h2>
 
-          <form class="bg-light-alpha p-3">
+          <form action="?" method="POST" class="bg-light-alpha p-3">
                <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-2">
                          <div class="form-group">
-                              <label for="">Nombre</label>
-                              <input type="text" name="" class="form-control" required>
+                              <label for="code">Codigo</label>
+                              <input type="number" name="code" class="form-control" min="0" required focused>
                          </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                          <div class="form-group">
-                              <label for="">Descripcion</label>
-                              <input type="text" name="" class="form-control" >
+                              <label for="name">Nombre</label>
+                              <input type="text" name="name" class="form-control" required>
+                         </div>
+                    </div>
+                    <div class="col-lg-3">
+                         <div class="form-group">
+                              <label for="description">Descripcion</label>
+                              <input type="text" name="description" class="form-control" >
                          </div>
                     </div>
                     <div class="col-lg-2">
                          <div class="form-group">
-                              <label for="">Precio</label>
-                              <input type="number" name="" class="form-control" required>
+                              <label for="price">Precio</label>
+                              <input type="number" name="price" class="form-control" required min="0">
                          </div>
                     </div>
                     <div class="col-lg-2">
                          <div class="form-group">
-                              <label for="">Cantidad</label>
-                              <input type="number" name="" class="form-control" min="1" required>
+                              <label for="quantity">Cantidad</label>
+                              <input type="number" name="quantity" class="form-control" min="1" required>
                          </div>
                     </div>
                </div>
-               <button type="button" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
+               <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
           </form>
      </div>
      <br>
@@ -71,27 +88,21 @@ include('nav.php');
                          <th>Sub-total</th>
                     </thead>
                     <tbody>
-                         <tr>
-                              <td>x</td>
-                              <td>x</td>
-                              <td>x</td>
-                              <td>x</td>
-                              <td>x</td>
-                         </tr>
-                         <tr>
-                              <td>x</td>
-                              <td>x</td>
-                              <td>x</td>
-                              <td>x</td>
-                              <td>x</td>
-                         </tr>
-                         <tr>
-                              <td>x</td>
-                              <td>x</td>
-                              <td>x</td>
-                              <td>x</td>
-                              <td>x</td>
-                         </tr>
+                         <?php 
+                              if(isset($newBill) && !empty($newBill->getItemList())){
+                                   foreach($newBill->getItemList() as $item){
+                                   ?>
+                                        <tr> 
+                                             <td><?php echo $item->getName(); ?></td>
+                                             <td><?php echo $item->getDescription(); ?></td>
+                                             <td><?php echo $item->getPrice(); ?></td>
+                                             <td><?php echo $item->getQuantity(); ?></td>
+                                             <td><?php echo $item->getSubTotal(); ?></td>
+                                        </tr>
+                                   <?php
+                                   }
+                              }
+                         ?>
                     </tbody>
                </table>
           </div>
@@ -103,11 +114,11 @@ include('nav.php');
                     <div class="col-lg-4">
                          <div class="form-group text-white">
                               <label for="" class="ml-1"><b>IMPORTE TOTAL A FACTURAR</b></label>
-                              <input type="text" value="" class="form-control ml-1 text-strong" disabled>
+                              <input type="text" value="<?php echo $newBill->totalCost(); ?>" class="form-control ml-1 text-strong" disabled>
                          </div>
                     </div>
                     <div class="form-group">
-                         <button type="button" class="btn-fix btn btn-danger mt-3" onclick="" >Procesar Factura</button>
+                         <button type="button" class="btn-fix btn btn-danger mt-3" onclick="location.href='bill-list.php';" >Procesar Factura</button>
                     </div>
                </div>
           </div>
