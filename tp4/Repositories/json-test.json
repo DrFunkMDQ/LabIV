@@ -1,0 +1,38 @@
+[
+    {
+        "name": "pincel fino de 2\/3",
+        "desc": " pincel de cerdas finas para acuarela",
+        "price": " 120.00",
+        "qty": " 6"
+    },
+     {
+        "name": "pintura fluor 1L",
+        "desc": " pintura warner fluo",
+        "price": " 400.00",
+        "qty": " 3"
+    },
+    {
+        "name": "plato de mezcla",
+        "desc": " plato pl\u00e1stico de mezcla con refuerzo anti ca\u00edda",
+        "price": " 200.00",
+        "qty": " 1"
+    },
+    {
+        "name": "pincel com\u00fan 1.2",
+        "desc": " pincel fabber cerda com\u00fan para tempera",
+        "price": " 120.00",
+        "qty": " 5"
+    },
+    {
+        "name": "rodillo grueso 3\/4",
+        "desc": " rodillo rugoso de expesor para exterior",
+        "price": " 95.00",
+        "qty": " 2"
+    },
+    {
+        "name": "kit de acuarelas",
+        "desc": " combo de acuarelas color pastel",
+        "price": " 770.00",
+        "qty": " 2"
+    }
+]
